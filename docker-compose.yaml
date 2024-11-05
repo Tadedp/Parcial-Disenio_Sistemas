@@ -1,46 +1,34 @@
 services:
-
-  fast_api_rest:
-    build: .
-    image: fast_api_rest
-    container_name: fast_api_rest
+  db:
+    image: postgres:13 
     environment:
-      POSTGRES_HOST: "postgres"
-      POSTGRES_PORT: "5432"
-      POSTGRES_DB: "postgres"
-      POSTGRES_USER: "postgres"
-      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_DB: mutantes
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
     ports:
-      - "8000:8000"
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/health_check"]
-      interval: 10s
-      timeout: 10s
-      retries: 5
+      - "5433:5432"  
     networks:
-      - fast_api_rest_network
-
-  postgres:
-    image: postgres:13
-    container_name: postgres
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: postgres
-    ports:
-      - "5432:5432"
-    healthcheck:
-      test: ["CMD", "pg_isready", "-U", "postgres"]
-      interval: 10s
-      timeout: 10s
-      retries: 5
+      - mutant-network
     volumes:
       - postgres_data:/var/lib/postgresql/data  
+
+  api:
+    build: .
+    environment:
+      POSTGRES_HOST: db  
+      POSTGRES_PORT: 5432  
+      POSTGRES_DB: mutantes 
+      POSTGRES_USER: user  
+      POSTGRES_PASSWORD: password  
+    depends_on:
+      - db
+    ports:
+      - "8000:8000"
     networks:
-      - fast_api_rest_network
+      - mutant-network
 
 networks:
-  fast_api_rest_network:
+  mutant-network:
     driver: bridge
 
 volumes:
