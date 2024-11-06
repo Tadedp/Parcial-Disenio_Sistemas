@@ -4,6 +4,7 @@ from schemas import ADNSchema
 
 class ADNRepository(BaseRepositoryImpl):
     def __init__(self):
+        # Initialize the repository with ADN-specific model and schema
         super().__init__(ADNModel, ADNSchema)
         
     def count_mutants(self):

@@ -1,0 +1,65 @@
+{
+	"info": {
+		"_postman_id": "0927d6a1-5774-4011-a7c4-0f0e7a38b53f",
+		"name": "mutantes",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33904100"
+	},
+	"item": [
+		{
+			"name": "stats",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/mutant/stats",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"mutant",
+						"stats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mutant",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \n    \"dna\":[\"ATGCGA\",\"CATTGC\",\"TTATGT\",\"AGGGGG\",\"CCCATA\",\"TCACTG\"]\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/mutant/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"mutant",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

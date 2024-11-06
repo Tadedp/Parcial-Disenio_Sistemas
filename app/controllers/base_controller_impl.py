@@ -9,11 +9,11 @@ from services.base_service import BaseService
 
 class BaseControllerImpl(BaseController):
     """Base controller implementation."""
-
     def __init__(self, schema: Type[BaseSchema], service: BaseService,):
         self.service = service
         self.schema = schema
-        self.router = APIRouter()
+        # APIRouter instance to handle routing related to a particular resource for the controller
+        self.router = APIRouter()  
 
     @property
     def service(self) -> BaseService:

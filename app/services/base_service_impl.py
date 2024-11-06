@@ -42,16 +42,19 @@ class BaseServiceImpl(BaseService):
 
     def save(self, schema: BaseSchema) -> BaseSchema:
         """Save data"""
+        # Convert the schema instance to a model instance and save it
         return self.repository.save(self.to_model(schema))
 
     def update(self, id_key: int, schema: BaseSchema) -> BaseSchema:
         """Update data"""
+        # Convert schema data to dictionary and update the record in the repository
         return self.repository.update(id_key, schema.model_dump())
 
     def delete(self, id_key: int) -> None:
         """Delete data"""
         self.repository.remove(id_key)
 
+    # Convert a schema instance to a model instance
     def to_model(self, schema: BaseSchema) -> BaseModel:
         model_class = type(self.model) if not callable(self.model) else self.model
         model_instance = model_class(**schema.model_dump())

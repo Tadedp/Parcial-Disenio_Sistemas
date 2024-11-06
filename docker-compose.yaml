@@ -1,35 +1,57 @@
 services:
+  # Database service
   db:
+    # Use the official PostgreSQL image version 13
     image: postgres:13 
+
+    # Set environment variables for PostgreSQL setup
     environment:
       POSTGRES_DB: mutantes
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
+
+    # Expose the PostgreSQL port 5432 inside the container to port 5433 on the host
     ports:
       - "5433:5432"  
+
+    # Assign the container to a specific network to enable communication with other services
     networks:
       - mutant-network
+
+    # Mount a named volume to persist data outside of the container
     volumes:
       - postgres_data:/var/lib/postgresql/data  
 
+  # API service
   api:
+    # Build the Docker image from the current directory
     build: .
+
+    # Set environment variables for API service, linking to the database service
     environment:
       POSTGRES_HOST: db  
       POSTGRES_PORT: 5432  
       POSTGRES_DB: mutantes 
       POSTGRES_USER: user  
       POSTGRES_PASSWORD: password  
+
+    # Specify that the API service depends on the db service being ready first
     depends_on:
       - db
+
+    # Expose the API port 8000 inside the container to port 8000 on the host
     ports:
       - "8000:8000"
+
+    # Attach the API service to the same network as the database
     networks:
       - mutant-network
 
+# Define the networks for communication between services
 networks:
   mutant-network:
     driver: bridge
 
+# Define named volumes for persisting data between container restarts
 volumes:
   postgres_data:
